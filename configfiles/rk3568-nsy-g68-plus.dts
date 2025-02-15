@@ -1,11 +1,11 @@
 /dts-v1/;
 
 / {
-	compatible = "nsy,g68-plus", "rockchip,rk3568";
 	interrupt-parent = <0x01>;
 	#address-cells = <0x02>;
 	#size-cells = <0x02>;
-	model = "NSY-G68 AX3000 Router";
+	compatible = "bendian,bd-one\0rockchip,rk3568";
+	model = "BenDian One";
 
 	aliases {
 		gpio0 = "/pinctrl/gpio@fdd60000";
@@ -716,42 +716,41 @@
 		reg = <0x00 0xfe010000 0x00 0x10000>;
 		interrupts = <0x00 0x20 0x04 0x00 0x1d 0x04>;
 		interrupt-names = "macirq\0eth_wake_irq";
-		clocks = <0x11 0x186 0x11 0x189 0x11 0x189 0x11 0xc7 0x11 0xc3 0x11 0xc4 0x11 0x189 0x11 0xc8>;
-		clock-names = "stmmaceth\0mac_clk_rx\0mac_clk_tx\0clk_mac_refout\0aclk_mac\0pclk_mac\0clk_mac_speed\0ptp_ref";
-		resets = <0x11 0xec>;
+		rockchip,grf = <0x31>;
+		clocks = <0x21 0x186 0x21 0x189 0x21 0x189 0x21 0xc7 0x21 0xc3 0x21 0xc4 0x21 0x189 0x21 0xc8 0x21 0xac 0x21 0xab>;
+		clock-names = "stmmaceth\0mac_clk_rx\0mac_clk_tx\0clk_mac_refout\0aclk_mac\0pclk_mac\0clk_mac_speed\0ptp_ref\0pclk_xpcs\0clk_xpcs_eee";
+		resets = <0x21 0xec>;
 		reset-names = "stmmaceth";
-		rockchip,grf = <0x1f>;
-		snps,axi-config = <0x46>;
 		snps,mixed-burst;
-		snps,mtl-rx-config = <0x47>;
-		snps,mtl-tx-config = <0x48>;
 		snps,tso;
-		status = "okay";
-		assigned-clocks = <0x11 0x189 0x11 0x186>;
-		assigned-clock-parents = <0x11 0x187>;
-		assigned-clock-rates = <0x00 0x7735940>;
-		clock_in_out = "output";
-		phy-handle = <0x49>;
+		snps,axi-config = <0x7d>;
+		snps,mtl-rx-config = <0x7e>;
+		snps,mtl-tx-config = <0x7f>;
+		status = "disabled";
 		phy-mode = "rgmii";
-		phy-supply = <0x1b>;
-		pinctrl-names = "default";
-		pinctrl-0 = <0x4a 0x4b 0x4c 0x4d 0x4e>;
-		snps,reset-delays-us = <0x00 0x4e20 0x186a0>;
-		snps,reset-gpio = <0x4f 0x06 0x01>;
+		clock_in_out = "output";
+		snps,reset-gpio = <0x80 0x09 0x01>;
 		snps,reset-active-low;
-		tx_delay = <0x30>;
-		rx_delay = <0x10>;
+		snps,reset-delays-us = <0x00 0x4e20 0x186a0>;
+		assigned-clocks = <0x21 0x189 0x21 0x186>;
+		assigned-clock-parents = <0x21 0x187 0x21 0xc5>;
+		assigned-clock-rates = <0x00 0x7735940>;
+		pinctrl-names = "default";
+		pinctrl-0 = <0x81 0x82 0x83 0x84 0x85>;
+		tx_delay = <0x4f>;
+		rx_delay = <0x26>;
+		phy-handle = <0x86>;
+		phandle = <0x7c>;
 
 		mdio {
 			compatible = "snps,dwmac-mdio";
 			#address-cells = <0x01>;
 			#size-cells = <0x00>;
 
-			ethernet-phy@0 {
+			phy@0 {
 				compatible = "ethernet-phy-ieee802.3-c22";
 				reg = <0x00>;
-				realtek,led-data = <0x17b>;
-				phandle = <0x49>;
+				phandle = <0x86>;
 			};
 		};
 
