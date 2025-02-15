@@ -711,6 +711,13 @@
 		status = "disabled";
 	};
 
+	uio@fe010000 {
+		compatible = "rockchip,uio-gmac";
+		reg = <0x00 0xfe010000 0x00 0x10000>;
+		rockchip,ethernet = <0x7c>;
+		status = "disabled";
+	};
+
 	ethernet@fe010000 {
 		compatible = "rockchip,rk3568-gmac\0snps,dwmac-4.20a";
 		reg = <0x00 0xfe010000 0x00 0x10000>;
@@ -3010,32 +3017,42 @@
 		};
 	};
 
+	uio@fe2a0000 {
+		compatible = "rockchip,uio-gmac";
+		reg = <0x00 0xfe2a0000 0x00 0x10000>;
+		rockchip,ethernet = <0xba>;
+		status = "disabled";
+	};
+
 	ethernet@fe2a0000 {
 		compatible = "rockchip,rk3568-gmac\0snps,dwmac-4.20a";
 		reg = <0x00 0xfe2a0000 0x00 0x10000>;
 		interrupts = <0x00 0x1b 0x04 0x00 0x18 0x04>;
 		interrupt-names = "macirq\0eth_wake_irq";
-		clocks = <0x11 0x182 0x11 0x185 0x11 0x185 0x11 0xb8 0x11 0xb4 0x11 0xb5 0x11 0x185 0x11 0xb9 0x11 0xac>;
-		clock-names = "stmmaceth\0mac_clk_rx\0mac_clk_tx\0clk_mac_refout\0aclk_mac\0pclk_mac\0clk_mac_speed\0ptp_ref\0pclk_xpcs";
-		resets = <0x11 0xd7>;
+		rockchip,grf = <0x31>;
+		clocks = <0x21 0x182 0x21 0x185 0x21 0x185 0x21 0xb8 0x21 0xb4 0x21 0xb5 0x21 0x185 0x21 0xb9 0x21 0xac 0x21 0xab>;
+		clock-names = "stmmaceth\0mac_clk_rx\0mac_clk_tx\0clk_mac_refout\0aclk_mac\0pclk_mac\0clk_mac_speed\0ptp_ref\0pclk_xpcs\0clk_xpcs_eee";
+		resets = <0x21 0xd7>;
 		reset-names = "stmmaceth";
-		rockchip,grf = <0x1f>;
-		snps,axi-config = <0xc3>;
 		snps,mixed-burst;
-		snps,mtl-rx-config = <0xc4>;
-		snps,mtl-tx-config = <0xc5>;
 		snps,tso;
+		snps,axi-config = <0xbb>;
+		snps,mtl-rx-config = <0xbc>;
+		snps,mtl-tx-config = <0xbd>;
 		status = "okay";
-		assigned-clocks = <0x11 0x185 0x11 0x182>;
-		assigned-clock-parents = <0x11 0x183>;
-		assigned-clock-rates = <0x00 0x7735940>;
-		clock_in_out = "output";
 		phy-mode = "rgmii";
+		clock_in_out = "output";
+		snps,reset-gpio = <0x80 0x08 0x01>;
+		snps,reset-active-low;
+		snps,reset-delays-us = <0x00 0x4e20 0x186a0>;
+		assigned-clocks = <0x21 0x185 0x21 0x182>;
+		assigned-clock-parents = <0x21 0x183 0x21 0xb6>;
+		assigned-clock-rates = <0x00 0x7735940>;
 		pinctrl-names = "default";
-		pinctrl-0 = <0xc6 0xc7 0xc8 0xc9 0xca>;
-		tx_delay = <0x4f>;
-		rx_delay = <0x0f>;
-		phandle = <0xcb>;
+		pinctrl-0 = <0xbe 0xbf 0xc0 0xc1 0xc2>;
+		tx_delay = <0x3c>;
+		rx_delay = <0x2f>;
+		phandle = <0xba>;
 
 		mdio {
 			compatible = "snps,dwmac-mdio";
